@@ -15,28 +15,35 @@ class DetailsPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.network(artObject.headerImageUrl),
-            SizedBox(height: 16),
-            Text(
-              artObject.longTitle,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text(
-              "By: ${artObject.principalOrFirstMaker}",
-              style: TextStyle(fontStyle: FontStyle.italic),
-            ),
-            if (artObject.productionPlaces.isNotEmpty) ...[
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(artObject.imageUrl),
+              SizedBox(height: 16),
+              Text(
+                artObject.longTitle,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               SizedBox(height: 8),
               Text(
-                "Produced in: ${artObject.productionPlaces.join(', ')}",
+                "By: ${artObject.principalOrFirstMaker}",
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
+              if (artObject.productionPlaces.isNotEmpty) ...[
+                SizedBox(height: 8),
+                Text(
+                  "Produced in: ${artObject.productionPlaces.join(', ')}",
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+                SizedBox(height: 8),
+              ],
+              Text(
+                "Object number: ${artObject.objectNumber}",
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ],
-          ],
+          ),
         ),
       ),
     );

@@ -23,7 +23,7 @@ ArtObjectDto _$ArtObjectDtoFromJson(Map<String, dynamic> json) => ArtObjectDto(
   json['title'] as String,
   json['principalOrFirstMaker'] as String,
   json['longTitle'] as String,
-  HeaderImageDto.fromJson(json['headerImage'] as Map<String, dynamic>),
+  WebImageDto.fromJson(json['webImage'] as Map<String, dynamic>),
   (json['productionPlaces'] as List<dynamic>).map((e) => e as String).toList(),
 );
 
@@ -33,12 +33,12 @@ Map<String, dynamic> _$ArtObjectDtoToJson(ArtObjectDto instance) =>
       'title': instance.title,
       'principalOrFirstMaker': instance.principalOrFirstMaker,
       'longTitle': instance.longTitle,
-      'headerImage': instance.headerImage,
+      'webImage': instance.webImage,
       'productionPlaces': instance.productionPlaces,
     };
 
-HeaderImageDto _$HeaderImageDtoFromJson(Map<String, dynamic> json) =>
-    HeaderImageDto(json['url'] as String);
+WebImageDto _$WebImageDtoFromJson(Map<String, dynamic> json) =>
+    WebImageDto(json['url'] as String);
 
-Map<String, dynamic> _$HeaderImageDtoToJson(HeaderImageDto instance) =>
+Map<String, dynamic> _$WebImageDtoToJson(WebImageDto instance) =>
     <String, dynamic>{'url': instance.url};

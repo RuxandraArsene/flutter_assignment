@@ -4,7 +4,7 @@ class ArtObject {
     required this.title,
     required this.principalOrFirstMaker,
     required this.longTitle,
-    required this.headerImageUrl,
+    required this.imageUrl,
     required this.productionPlaces,
   });
 
@@ -12,6 +12,6 @@ class ArtObject {
   final String title;
   final String longTitle;
   final String principalOrFirstMaker;
-  final String headerImageUrl;
+  final String imageUrl;
   final List<String> productionPlaces;
 }

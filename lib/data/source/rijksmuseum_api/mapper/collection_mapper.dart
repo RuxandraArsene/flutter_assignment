@@ -12,7 +12,7 @@ class CollectionMapper {
             title: object.title,
             longTitle: object.longTitle,
             principalOrFirstMaker: object.principalOrFirstMaker,
-            headerImageUrl: _mapHeaderImage(object.headerImage),
+            imageUrl: _mapHeaderImage(object.webImage),
             productionPlaces: object.productionPlaces,
           ),
         )
@@ -21,5 +21,5 @@ class CollectionMapper {
     return artObjects;
   }
 
-  String _mapHeaderImage(HeaderImageDto dto) => dto.url;
+  String _mapHeaderImage(WebImageDto dto) => dto.url;
 }

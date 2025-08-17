@@ -105,7 +105,7 @@ class _ArtCollectionPageState extends State<ArtCollectionPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Image.network(
-                                      item.headerImageUrl,
+                                      item.imageUrl,
                                       height: 200,
                                       width: double.infinity,
                                       fit: BoxFit.cover,

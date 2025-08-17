@@ -21,7 +21,7 @@ class ArtObjectDto {
       this.title,
       this.principalOrFirstMaker,
       this.longTitle,
-      this.headerImage,
+      this.webImage,
       this.productionPlaces,
       );
 
@@ -35,18 +35,18 @@ class ArtObjectDto {
   final String title;
   final String principalOrFirstMaker;
   final String longTitle;
-  final HeaderImageDto headerImage;
+  final WebImageDto webImage;
   final List<String> productionPlaces;
 }
 
 @JsonSerializable()
-class HeaderImageDto {
-  HeaderImageDto(this.url);
+class WebImageDto {
+  WebImageDto(this.url);
 
-  factory HeaderImageDto.fromJson(Map<String, dynamic> json) =>
-      _$HeaderImageDtoFromJson(json);
+  factory WebImageDto.fromJson(Map<String, dynamic> json) =>
+      _$WebImageDtoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HeaderImageDtoToJson(this);
+  Map<String, dynamic> toJson() => _$WebImageDtoToJson(this);
 
   final String url;
 }
