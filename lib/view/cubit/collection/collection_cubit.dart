@@ -17,11 +17,18 @@ class CollectionCubit extends Cubit<BaseState> {
   bool _hasMoreGroupsToLoad = false;
   List<ArtObject> _artObjects = [];
 
+  int get page => _page;
+
+  bool get hasMoreGroupsToLoad => _hasMoreGroupsToLoad;
+
+  List<ArtObject> get artObjects => _artObjects;
+
   Future<void> getArtCollection() async {
     emit(CollectionLoadingState());
     try {
       _artObjects = await _getArtObjectCollectionUseCase.execute();
       _hasMoreGroupsToLoad = true;
+      _page = 1;
 
       _emitState();
     } catch (e) {
