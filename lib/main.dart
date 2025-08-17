@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_assignment/view/cubit/collection/collection_cubit.dart';
 import 'package:flutter_assignment/view/page/art_collection_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/injection.dart';
 
@@ -15,12 +17,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Assignment',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+    return BlocProvider<CollectionCubit>(
+      create: (context) => getIt<CollectionCubit>(),
+      child: MaterialApp(
+        title: 'Flutter Assignment',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+        ),
+        home: const ArtCollectionPage(),
       ),
-      home: const ArtCollectionPage(),
     );
   }
 }

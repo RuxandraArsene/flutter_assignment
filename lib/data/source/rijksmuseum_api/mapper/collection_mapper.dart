@@ -3,7 +3,7 @@ import 'package:flutter_assignment/data/source/rijksmuseum_api/dto/get_collectio
 import 'package:injectable/injectable.dart';
 
 @injectable
-class RijksmuseumMapper {
+class CollectionMapper {
   List<ArtObject> mapArtObject(GetCollectionResponse responseDto) {
     final artObjects = responseDto.artObjects
         .map(

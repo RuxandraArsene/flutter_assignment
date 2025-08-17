@@ -16,6 +16,8 @@ abstract class Client {
     return _Client(dio);
   }
 
-  @GET('collection?key=0fiuZFh4')
-  Future<GetCollectionResponse> getCollection();
+  @GET('collection')
+  Future<GetCollectionResponse> getCollection({
+    @Query('key') required String key,
+  });
 }

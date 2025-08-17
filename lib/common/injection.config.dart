@@ -13,11 +13,11 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
-import '../core/use_case/get_art_object_collection_use_case.dart' as _i601;
-import '../data/repository/rijksmuseum_repository.dart' as _i173;
-import '../data/source/rijksmuseum_api/mapper/rijksmuseum_mapper.dart' as _i317;
+import '../core/use_case/get_art_collection_use_case.dart' as _i891;
+import '../data/repository/collection_repository.dart' as _i460;
+import '../data/source/rijksmuseum_api/collection_api_source.dart' as _i572;
+import '../data/source/rijksmuseum_api/mapper/collection_mapper.dart' as _i512;
 import '../data/source/rijksmuseum_api/rijksmuseum_api_client.dart' as _i931;
-import '../data/source/rijksmuseum_api/rijksmuseum_api_source.dart' as _i699;
 import '../view/cubit/collection/collection_cubit.dart' as _i693;
 import 'dio_register_module.dart' as _i531;
 
@@ -29,24 +29,23 @@ _i174.GetIt $initGetIt(
 }) {
   final gh = _i526.GetItHelper(getIt, environment, environmentFilter);
   final dioRegisterModule = _$DioRegisterModule();
-  gh.factory<_i317.RijksmuseumMapper>(() => _i317.RijksmuseumMapper());
   gh.factory<_i361.Dio>(() => dioRegisterModule.dio);
+  gh.factory<_i512.CollectionMapper>(() => _i512.CollectionMapper());
   gh.factory<_i931.Client>(() => _i931.Client.new(gh<_i361.Dio>()));
-  gh.factory<_i699.RijksmuseumApiSource>(
-    () => _i699.RijksmuseumApiSource(
+  gh.factory<_i572.CollectionApiSource>(
+    () => _i572.CollectionApiSource(
       gh<_i931.Client>(),
-      gh<_i317.RijksmuseumMapper>(),
+      gh<_i512.CollectionMapper>(),
     ),
   );
-  gh.factory<_i173.RijksmuseumRepository>(
-    () => _i173.RijksmuseumRepository(gh<_i699.RijksmuseumApiSource>()),
+  gh.factory<_i460.CollectionRepository>(
+    () => _i460.CollectionRepository(gh<_i572.CollectionApiSource>()),
   );
-  gh.factory<_i601.GetArtObjectCollectionUseCase>(
-    () =>
-        _i601.GetArtObjectCollectionUseCase(gh<_i173.RijksmuseumRepository>()),
+  gh.factory<_i891.GetArtCollectionUseCase>(
+    () => _i891.GetArtCollectionUseCase(gh<_i460.CollectionRepository>()),
   );
   gh.factory<_i693.CollectionCubit>(
-    () => _i693.CollectionCubit(gh<_i601.GetArtObjectCollectionUseCase>()),
+    () => _i693.CollectionCubit(gh<_i891.GetArtCollectionUseCase>()),
   );
   return getIt;
 }

@@ -20,16 +20,16 @@ class _Client implements Client {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<GetCollectionResponse> getCollection() async {
+  Future<GetCollectionResponse> getCollection({required String key}) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'key': key};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GetCollectionResponse>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'collection?q=Rembrandt&key=0fiuZFh4',
+            'collection',
             queryParameters: queryParameters,
             data: _data,
           )

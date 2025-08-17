@@ -1,32 +1,74 @@
 import 'package:flutter_assignment/view/common/base_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import '../../../core/error/custom_error.dart';
 import '../../../core/model/art_object.dart';
-import '../../../core/use_case/get_art_object_collection_use_case.dart';
+import '../../../core/use_case/get_art_collection_use_case.dart';
 import 'collection_state.dart';
 
 @injectable
 class CollectionCubit extends Cubit<BaseState> {
   CollectionCubit(this._getArtObjectCollectionUseCase) : super(InitialState());
 
-  final GetArtObjectCollectionUseCase _getArtObjectCollectionUseCase;
+  final GetArtCollectionUseCase _getArtObjectCollectionUseCase;
+
+  final int _limit = 3;
+  int _page = 1;
+  bool _hasMoreGroupsToLoad = false;
+  List<ArtObject> _artObjects = [];
 
   Future<void> getArtCollection() async {
     emit(CollectionLoadingState());
     try {
-      final collection = await _getArtObjectCollectionUseCase.execute();
-      final groupedObjects = _groupArtObjects(collection);
-      List<String> sortedObjects = _sortArtObjectsByKeys(groupedObjects);
+      _artObjects = await _getArtObjectCollectionUseCase.execute();
+      _hasMoreGroupsToLoad = true;
 
-      emit(
-        CollectionRetrievedState(
-          groupedArtObjects: groupedObjects,
-          sortedGroupedObjectByKeys: sortedObjects,
-        ),
-      );
+      _emitState();
     } catch (e) {
-      emit(CollectionErrorState(errorMessage: e.toString()));
+      String errorMessage;
+
+      if (e is NoDataConnectionError) {
+        errorMessage = 'No internet connection. Please check your network.';
+      } else if (e is UnauthorizedError) {
+        errorMessage = 'You are not authorized to access this resource.';
+      } else {
+        errorMessage = 'Something went wrong';
+      }
+
+      emit(CollectionErrorState(errorMessage: errorMessage));
     }
+  }
+
+  Future<void> loadMoreGroups() async {
+    if (!_hasMoreGroupsToLoad) return;
+
+    _page++;
+    _emitState(isLoadingMoreData: true);
+  }
+
+  void _emitState({bool isLoadingMoreData = false}) {
+    Map<String, List<ArtObject>> grouped = _getGroupedObjectsForCurrentPage();
+
+    emit(
+      CollectionRetrievedState(
+        groupedArtObjects: grouped,
+        sortedGroupedObjectByKeys: _sortArtObjectsByKeys(grouped),
+        isLoadingMoreData: isLoadingMoreData,
+        hasMoreGroupsToLoad: _hasMoreGroupsToLoad,
+      ),
+    );
+  }
+
+  Map<String, List<ArtObject>> _getGroupedObjectsForCurrentPage() {
+    int endIndex = _page * _limit;
+    if (endIndex >= _artObjects.length) {
+      endIndex = _artObjects.length;
+      _hasMoreGroupsToLoad = false;
+    }
+
+    final currentObjects = _artObjects.sublist(0, endIndex);
+
+    return _groupArtObjects(currentObjects);
   }
 
   Map<String, List<ArtObject>> _groupArtObjects(List<ArtObject> collection) {
